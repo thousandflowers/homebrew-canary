@@ -1,33 +1,32 @@
 class Canary < Formula
-  desc "Pixel-art fatigue bird that lives in your shell prompt"
+  desc "Pixel-art fatigue bird that lives in Claude Code's status line"
   homepage "https://github.com/thousandflowers/canary"
-  url "https://github.com/thousandflowers/canary/archive/refs/tags/v0.3.1.tar.gz"
-  sha256 "91b1bee240fbe2e1001d5786dde48107ebfb3d5fad9d3e3890f2895ccb215d66"
+  url "https://github.com/thousandflowers/canary/archive/refs/tags/v0.4.0.tar.gz"
+  sha256 "6fb72f22fc28721d182259317981a2c32741320fad6aedeed4326f87f926d2d2" # shasum -a 256 of the v0.4.0 tarball
   license "MIT"
 
   def install
-    pkgshare.install "canary.sh", "canary.fish", "canary-statusline.sh"
-    doc.install "README.md", "demo.tape"
+    pkgshare.install "canary-statusline.sh", "install.sh", "uninstall.sh"
+    doc.install "README.md"
   end
 
   def caveats
     <<~EOS
-      canary is a shell snippet, not a binary. Add it to your shell rc:
+      canary lives in Claude Code's status line, not your shell. Wire it:
 
-        zsh / bash:
-          echo 'source #{opt_pkgshare}/canary.sh' >> ~/.zshrc      # or ~/.bashrc
+        sh #{opt_pkgshare}/install.sh
 
-        fish:
-          echo 'source #{opt_pkgshare}/canary.fish' >> ~/.config/fish/config.fish
-
-      Open a new shell to meet the bird. Control it with `canary status`,
-      or CANARY_DISABLED / CANARY_RESET / CANARY_SHOW_SCORE.
+      Restart Claude Code to meet the bird. Tame it with CANARY_DISABLED,
+      CANARY_MIN_SCORE, CANARY_SHOW_SCORE, CANARY_ERR_WEIGHT (see README).
     EOS
   end
 
   test do
-    assert_path_exists pkgshare/"canary.sh"
-    output = shell_output("/bin/bash -c '. #{pkgshare}/canary.sh; _canary_render 0 show'")
+    assert_path_exists pkgshare/"canary-statusline.sh"
+    output = pipe_output(
+      "/bin/bash #{pkgshare}/canary-statusline.sh",
+      '{"cost":{"total_duration_ms":0}}',
+    )
     assert_match "fresh", output
   end
 end
