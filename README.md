@@ -1,14 +1,21 @@
-# homebrew-canary
+# homebrew-canary — deprecated
 
-Homebrew tap for [canary](https://github.com/thousandflowers/canary) — a
-pixel-art fatigue bird that lives in your shell prompt.
+This tap moved. Install canary from the one tap that holds all of them:
 
 ```sh
-brew install thousandflowers/canary/canary
+brew install thousandflowers/tap/canary
 ```
 
-canary is a shell snippet, not a binary — after install, follow the printed
-caveats to `source` it in your shell rc (zsh / bash / fish), then open a new
-shell. See the main repo for knobs and the `canary` command.
+If you installed from here, switch over once:
+
+```sh
+brew uninstall canary
+brew untap thousandflowers/canary
+brew install thousandflowers/tap/canary
+```
+
+This repo stays up so existing installs keep resolving, but nothing bumps it:
+it sat on v0.7.0 for months after canary became a Go binary, which is why one
+tap now holds every formula.
 
 MIT.
