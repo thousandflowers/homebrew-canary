@@ -1,21 +1,17 @@
-# homebrew-canary — deprecated
+# homebrew-canary — moved
 
-This tap moved. Install canary from the one tap that holds all of them:
+canary lives in one tap with the rest of them now:
 
 ```sh
 brew install thousandflowers/tap/canary
 ```
 
-If you installed from here, switch over once:
+If you installed from this tap you do not have to do anything: `tap_migrations.json`
+moves you across on your next `brew update`.
 
-```sh
-brew uninstall canary
-brew untap thousandflowers/canary
-brew install thousandflowers/tap/canary
-```
-
-This repo stays up so existing installs keep resolving, but nothing bumps it:
-it sat on v0.7.0 for months after canary became a Go binary, which is why one
-tap now holds every formula.
+This tap existed alongside `thousandflowers/homebrew-tap` and nothing bumped it,
+so it served the v0.7.0 shell scripts for months after canary became a Go
+binary. One tap now holds every formula, which is the only way that stops
+happening.
 
 MIT.
